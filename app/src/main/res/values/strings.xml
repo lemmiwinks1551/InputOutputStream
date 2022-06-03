@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WorkWithFiles</string>
+    <string name="save_name">Сохранить</string>
+    <string name="load_name">Загрузить</string>
+</resources>
