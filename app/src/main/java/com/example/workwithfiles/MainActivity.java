@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        loadNameOnCreate();
     }
 
     private final static String FILE_NAME = "content.txt";
@@ -70,6 +71,31 @@ public class MainActivity extends AppCompatActivity {
             try {
                 if (fis != null)
                     fis.close();    // Закрыть поток
+            } catch (IOException ex) {
+
+                Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    // загрузка имени из файла
+    public void loadNameOnCreate() {
+        FileInputStream fileInputStream = null;
+        TextView outputTextView = findViewById(R.id.text);
+        try {
+            fileInputStream = openFileInput(FILE_NAME);
+            byte[] name = new byte[fileInputStream.available()];
+            fileInputStream.read(name);
+            String nameStr = new String(name);
+            outputTextView.setText(nameStr);
+            // Toast.makeText(this, "Имя загружено", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+        } finally {
+            try {
+                if (fileInputStream != null)
+                    fileInputStream.close();    // Закрыть поток
             } catch (IOException ex) {
 
                 Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
